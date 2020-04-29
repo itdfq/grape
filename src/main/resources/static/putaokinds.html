@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>添加数据</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+	</head>
+	<script type="text/javascript">
+		// 获取页面加载的参数的值
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+		//var username=GetQueryString(username);
+		//alert(username);
+	</script>
+	<body>
+	<div style="margin-top: 20px; " align="center">
+	<div class="easyui-panel" title="注册" style="width:100%;max-width:4000px;padding:30px 60px;">
+		<form id="ff" class="easyui-form"  data-options="novalidate:true">
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="pname" style="width:100%" id="pname" data-options="label:'品种名称:',required:true">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="bieming" style="width:100%" id="bieming" type="text"  data-options="label:'别名:',required:true ">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="characters" style="width:100%" id="characters" type="text" data-options="label:'品种特性:',required:true ">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="forms" style="width:100%" id="forms" data-options="label:'来源:',required:true">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="projects" style="width:100%" id="projects" data-options="label:'栽培事项:',multiline:true" >
+			</div>
+		
+		</form>
+		<div style="text-align:center;padding:5px 0">
+			<button id="resign" class="easyui-linkbutton" style="width:80px" onclick="resign()">添加</button>
+			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">重置</a>
+		</div>
+	</div>
+	<script>
+
+
+		function resign() {
+			var pname=$('#pname').val();
+			var bieming=$('#bieming').val();
+			var characters=$('#characters').val();
+			var forms=$('#forms').val();
+			var projects=$('#projects').val();
+			var data={"pname":pname,"bieming":bieming,"characters":characters,"forms":forms,"projects":projects };
+			var datas = JSON.stringify(data);
+			if(pname.length<=0||bieming.length<=0||characters.length<=0||forms.length<=0||projects.length<=0) {
+				alert("用户名不能为空！！");
+				return;
+			}
+			$.ajax({
+				url:"putaoKindss/insert",
+				data:datas,
+				type:"post",
+				dataType: "json",
+				contentType: "application/json;charset=UTF-8",
+				success:function (data) {
+					if(data.msg){
+						alert("添加成功");
+						window.close();
+					}
+					else{
+						alert("添加失败");
+					}
+				}
+			});
+		}
+
+		function clearForm(){
+			$('#ff').form('clear');
+		}
+	</script>
+	</div>
+	</body>
+</html>

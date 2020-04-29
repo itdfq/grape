@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfq.grape.dao.PutaoKindsDAO">
+
+    <resultMap id="putaoKindsMap" type="com.dfq.grape.model.PutaoKinds">
+        <id property="id" column="id"/>
+        <result property="pname" column="pname"/>
+        <result property="bieming" column="bieming"/>
+        <result property="characters" column="characters"/>
+        <result property="forms" column="forms"/>
+        <result property="projects" column="projects"/>
+    </resultMap>
+
+    <!--通过ID查询单个-->
+    <select id="findByKinds" resultMap="putaoKindsMap">
+        SELECT * FROM putao_kinds
+        WHERE pname=#{pname}
+    </select>
+
+    <!--分页查询-->
+    <select id="findByPage" resultMap="putaoKindsMap">
+        SELECT id,pname,bieming,characters,forms,projects FROM putao_kinds
+    </select>
+
+    <!--新增-->
+    <insert id="insert">
+        INSERT INTO putao_kinds(pname,bieming,characters,forms,projects)
+        VALUES (#{pname},#{bieming},#{characters},#{forms},#{projects})
+    </insert>
+
+    <!--修改-->
+    <update id="update">
+        UPDATE putao_kinds SET pname=#{pname},bieming=#{bieming},characters=#{characters},forms=#{forms},projects=#{projects}
+        WHERE id=#{id}
+    </update>
+
+    <!--通过ID删除单个-->
+    <delete id="deleteById">
+        DELETE FROM putao_kinds
+        WHERE id=#{id}
+    </delete>
+
+</mapper>

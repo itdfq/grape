@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dfq.grape.dao.PutaoZyjDAO">
+
+    <resultMap id="putaoZyjMap" type="com.dfq.grape.model.PutaoZyj">
+        <id property="id" column="id"/>
+        <result property="kinds" column="kinds"/>
+        <result property="max" column="max"/>
+        <result property="min" column="min"/>
+        <result property="avg" column="avg"/>
+        <result property="sd" column="sd"/>
+        <result property="cv" column="cv"/>
+    </resultMap>
+
+    <!--通过ID查询单个-->
+    <select id="findByKinds" resultMap="putaoZyjMap">
+        SELECT id,kinds,max,min,avg,sd,cv FROM putao_zyj
+        WHERE kinds=#{kinds}
+    </select>
+
+    <!--分页查询-->
+    <select id="findByPage" resultMap="putaoZyjMap">
+        SELECT id,kinds,max,min,avg,sd,cv FROM putao_zyj
+    </select>
+
+    <!--新增-->
+    <insert id="insert">
+        INSERT INTO putao_zyj(kinds,max,min,avg,sd,cv)
+        VALUES (#{kinds},#{max},#{min},#{avg},#{sd},#{cv})
+    </insert>
+
+    <!--修改-->
+    <update id="update">
+        UPDATE putao_zyj SET kinds=#{kinds},max=#{max},min=#{min},avg=#{avg},sd=#{sd},cv=#{cv}
+        WHERE id=#{id}
+    </update>
+
+    <!--通过ID删除单个-->
+    <delete id="deleteById">
+        DELETE FROM putao_zyj
+        WHERE id=#{id}
+    </delete>
+
+</mapper>

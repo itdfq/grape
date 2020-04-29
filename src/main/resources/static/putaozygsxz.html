@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>添加数据</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="easyui/locale/easyui-lang-zh_CN.js"></script>
+	</head>
+	<script type="text/javascript">
+		// 获取页面加载的参数的值
+		function GetQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+		//var username=GetQueryString(username);
+		//alert(username);
+	</script>
+	<body>
+	<div style="margin-top: 20px; " align="center">
+	<div class="easyui-panel" title="注册" style="width:100%;max-width:4000px;padding:30px 60px;">
+		<form id="ff" class="easyui-form"  data-options="novalidate:true">
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="kinds" style="width:100%" id="kinds" data-options="label:'种类:',required:true">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="max" style="width:100%" id="max" type="text"  data-options="label:'最大值:',required:true ">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="min" style="width:100%" id="min" type="text" data-options="label:'最小值:',required:true ">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="avg" style="width:100%" id="avg" data-options="label:'平均值:',required:true">
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="sd" style="width:100%" id="sd" data-options="label:'标准差:',multiline:true" >
+			</div>
+			<div style="margin-bottom:20px">
+				<input class="easyui-textbox" name="cv" style="width:100%" id="cv" data-options="label:'变异系数/%:',multiline:true" >
+			</div>
+		
+		</form>
+		<div style="text-align:center;padding:5px 0">
+			<button id="resign" class="easyui-linkbutton" style="width:80px" onclick="resign()">添加</button>
+			<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" style="width:80px">重置</a>
+		</div>
+	</div>
+	<script>
+
+
+		function resign() {
+			var kinds=$('#kinds').val();
+			var max=$('#max').val();
+			var min=$('#min').val();
+			var avg=$('#avg').val();
+			var sd=$('#sd').val();
+			var cv=$('#cv').val();
+			var data={"kinds":kinds,"max":max,"min":min,"avg":avg,"sd":sd,"cv":cv };
+			var datas = JSON.stringify(data);
+			if(kinds.length<=0||max.length<=0||min.length<=0||avg.length<=0||sd.length<=0||cv.length<=0) {
+				alert("用户名不能为空！！");
+				return;
+			}
+			$.ajax({
+				url:"putaoZygsxzs/insert",
+				data:datas,
+				type:"post",
+				dataType: "json",
+				contentType: "application/json;charset=UTF-8",
+				success:function (data) {
+					if(data.msg){
+						alert("添加成功");
+						window.close();
+					}
+					else{
+						alert("添加失败");
+					}
+				}
+			});
+		}
+
+		function clearForm(){
+			$('#ff').form('clear');
+		}
+	</script>
+	</div>
+	</body>
+</html>
